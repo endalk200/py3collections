@@ -4,7 +4,7 @@
 name: Upload Python Package
 
 on:
-  merge:
+  push:
     branches: [release]
 
 jobs:
