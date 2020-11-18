@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="py3collections",
-    version="0.0.2.7",
+    version="0.0.3",
     author="Endalkachew Biruk",
     author_email="eb808826@gmail.com",
     description="Collection of python tools for different scenarios.",
