@@ -1,0 +1,78 @@
+#!/usr/bin/ python3
+
+from signal import SIGINT, signal
+signal(SIGINT, lambda signum, frame: sys.exit(1))
+
+import os
+import sys
+from argparse import ArgumentParser
+import logging
+from PIL import Image
+
+
+logging.basicConfig(level=logging.DEBUG)
+
+# Require Python 3.6+
+if sys.version_info < (3, 6):
+    sys.exit("You have an old version of python. Install version 3.6 or higher.")
+
+
+def main():
+
+    # Exit on ctrl-c
+    def handler(signum, frame):
+        cancel(1)
+
+    # Register handler
+    signal(SIGINT, handler)
+
+    # Parse command-line arguments
+    parser = ArgumentParser(description="A command-line tool for converting betwen different image formats.")
+    parser.add_argument("-i", "--input", type=str, help="path to the input file")
+    parser.add_argument("-o", "--output", type=str, help="path to the output file")
+    args = parser.parse_args(sys.argv[1:])
+
+    # Check for input
+    if args.input and os.path.exists(args.input):
+        input_file = os.path.abspath(args.input)
+    else:
+        print("Invalid input")
+        sys.exit()
+
+    # Check for output
+    if args.output:
+        output_file = os.path.abspath(args.output)
+    else:
+        logging.error("invalid output")
+        sys.exit()
+
+    logging.info(f"converting {input_file} --> {output_file}")
+
+    converter = Converter(input=input_file, output=output_file)
+    converter.convert()
+
+def cancel(code=0):
+    sys.exit(code)
+
+
+class Converter:
+
+    def __init__(self, input, output):
+        self.input = input
+        self.output = output
+
+    def convert(self):
+        if self.output.endswith("jpeg"):
+            self.convert_to_jpeg()
+        else:
+            raise NotImplementedError
+
+    def convert_to_jpeg(self):
+        try:
+            Image.open(self.input).convert("RGB").save(self.output)
+            logging.info(f"conversion successfull \nOUTPUT: {self.output}")
+        except OSError as error:
+            logging.error(f"conversion unsuccessfull {error}")
+
+if __name__ == "__main__":
+    main()
