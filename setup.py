@@ -10,7 +10,7 @@ long_description = (BASE_DIR / 'README.md').read_text(encoding='utf-8')
 
 setuptools.setup(
     name="py3collections",
-    version="0.0.3",
+    version="0.0.8",
 
     author="Endalkachew Biruk",
     author_email="eb808826@gmail.com",
