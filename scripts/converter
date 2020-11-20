@@ -1,24 +1,28 @@
 #!/usr/bin/ python3
 
+"""
+Converter
+
+converter is standalone python script for converting betwen different image formats.
+This script can convert jpegs, png and others from one format to the other
+"""
+
 from signal import SIGINT, signal
+# configure signal for execution abort using ctr-c
 signal(SIGINT, lambda signum, frame: sys.exit(1))
 
 import os
 import sys
 from argparse import ArgumentParser
 import logging
+
 from PIL import Image
 
-
+# configure logging level
 logging.basicConfig(level=logging.DEBUG)
-
-# Require Python 3.6+
-if sys.version_info < (3, 6):
-    sys.exit("You have an old version of python. Install version 3.6 or higher.")
 
 
 def main():
-
     # Exit on ctrl-c
     def handler(signum, frame):
         cancel(1)
@@ -64,10 +68,19 @@ class Converter:
     def convert(self):
         if self.output.endswith("jpeg"):
             self.convert_to_jpeg()
+        elif self.output.endswith("png"):
+            self.convert_to_png()
         else:
             raise NotImplementedError
 
     def convert_to_jpeg(self):
+        try:
+            Image.open(self.input).convert("RGB").save(self.output)
+            logging.info(f"conversion successfull \nOUTPUT: {self.output}")
+        except OSError as error:
+            logging.error(f"conversion unsuccessfull {error}")
+
+    def convert_to_png(self):
         try:
             Image.open(self.input).convert("RGB").save(self.output)
             logging.info(f"conversion successfull \nOUTPUT: {self.output}")
