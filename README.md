@@ -1,6 +1,3 @@
-
-![Python](https://www.python.org/static/img/python-logo.png)
-
 # Py3Collections
 
 Py3Collections is colletion of python scripts, modules and packages that are usefull in variety of

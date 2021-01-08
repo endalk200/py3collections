@@ -34,7 +34,10 @@ setuptools.setup(
         ],
     },
 
-    scripts=["./scripts/converter"],
+    scripts = [
+        "./scripts/converter",
+        "./scripts/filefind"
+    ],
 
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
