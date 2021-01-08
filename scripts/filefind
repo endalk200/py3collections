@@ -1,0 +1,51 @@
+#!/usr/bin/ python3
+
+"""
+Converter
+
+converter is standalone python script for converting betwen different image formats.
+This script can convert jpegs, png and others from one format to the other
+"""
+
+from signal import SIGINT, signal
+# configure signal for execution abort using ctr-c
+signal(SIGINT, lambda signum, frame: sys.exit(1))
+
+import os
+import sys
+from argparse import ArgumentParser
+import logging
+
+# configure logging level
+logging.basicConfig(level=logging.DEBUG)
+
+def main():
+    # Exit on ctrl-c
+    def handler(signum, frame):
+        cancel(1)
+
+    # Register handler
+    signal(SIGINT, handler)
+
+    # Parse command-line arguments
+    parser = ArgumentParser(description="A command-line tool for searching for files\
+    recursively.")
+    parser.add_argument("-f", "--file", type=str, help="filename to search for")
+    args = parser.parse_args(sys.argv[1:])
+
+    file_name = args.file
+
+    find_file(file_name)
+
+def find_file(file_name):
+    for path, dirs, files in os.walk(os.getcwd()):
+        for __filename__ in files:
+            modified_filename = __filename__.lower()
+            if modified_filename == file_name.lower():
+                print(f"Found the file at {os.path.join(path, __filename__)}")
+
+def cancel(code=0):
+    sys.exit(code)
+
+if __name__ == "__main__":
+    main()
