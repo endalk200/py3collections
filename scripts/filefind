@@ -1,10 +1,12 @@
 #!/usr/bin/ python3
 
 """
-Converter
+FileFinder
 
-converter is standalone python script for converting betwen different image formats.
-This script can convert jpegs, png and others from one format to the other
+python script for searching files recursively in the current working
+directory. usage can be as follows:
+
+    filefind -f <filename>
 """
 
 from signal import SIGINT, signal
@@ -29,9 +31,12 @@ def main():
 
     # Parse command-line arguments
     parser = ArgumentParser(description="A command-line tool for searching for files\
-    recursively.")
-    parser.add_argument("-f", "--file", type=str, help="filename to search for")
+    recursively. \nfilefind -f <filename_with_file_extention>")
+    parser.add_argument("-f", "--file", type=str, help="filename to search for. File extension included")
     args = parser.parse_args(sys.argv[1:])
+
+    if args.file is None:
+        sys.exit("Insuficient argument given")
 
     file_name = args.file
 
