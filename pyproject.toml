@@ -1,5 +1,46 @@
+[tool.poetry]
+name = "py3collections"
+version = "0.1.2"
+description = "Collection of python tools for different scenarios"
+authors = ["endalk <eb808826@gmail.com>"]
+keywords = ["py3collections"]
+readme = "README.md"
+license = "MIT"
+homepage = "https://github.com/endalk200/py3collections"
+repository = "https://github.com/endalk200/py3collections"
+include = [
+    "LICENSE",
+]
+
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Utilities"
+]
+
+packages = [
+    { include = "pycollections", from = "lib" }
+]
+
+[tool.poetry.scripts]
+poetry = 'poetry.console:run'
+jpeg = 'pycollections.scripts:convert_to_jpeg'
+
 [build-system]
-# These are the assumed default build requirements from pip:
-# https://pip.pypa.io/en/stable/reference/pip/#pep-517-and-518-support
-requires = ["setuptools>=40.8.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry>=1.1"]
+build-backend = "poetry.masonry.api"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
